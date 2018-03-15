@@ -40,7 +40,7 @@ func main() {
 
 ## Contextual Functions
 
-> Note: `cfmt.Errorf` function does not do same things to `fmt.Errorf`, but just same as `fmt.Printf` with red colored text.
+> Note: cfmt.Errorf function does not do same things to fmt.Errorf, but to fmt.Printf with red colored text.
 
 - Success (Green)
   - Fsuccess, Fsuccessf, Fsuccessln
