@@ -23,7 +23,7 @@ go get github.com/mingrammer/cfmt
 
 ## Usage
 
-```
+```go
 import (
 	"github.com/mingrammer/cfmt"
 )
