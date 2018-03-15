@@ -59,3 +59,7 @@ func main() {
   - Ferror, Ferrorf, Ferrorln
   - Error, Errorf, Errorln
   - Serror, Serrorf, Serrorln
+
+## License
+
+MIT
