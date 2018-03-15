@@ -2,7 +2,12 @@
 
 <h1 align="center">cfmt</h1>
 
-<p align="center">  [![img](https://img.shields.io/badge/license-MIT-blue.svg)]()    [![img](https://godoc.org/github.com/mingrammer/cfmt?status.svg)](%EE%80%96https://godoc.org/github.com/mingrammer/cfmt%EE%80%97)  [![img](https://travis-ci.org/mingrammer/pyreportcard.svg?branch=master)](%EE%80%96https://travis-ci.org/mingrammer/pyreportcard%EE%80%97)  </p>
+<p align="center">
+  <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg"/></a>
+  <a href="https://goreportcard.com/report/github.com/mingrammer/cfmt"><img src="https://goreportcard.com/badge/github.com/mingrammer/cfmt"/></a>
+  <a href="https://godoc.org/github.com/mingrammer/cfmt"><img src="https://godoc.org/github.com/mingrammer/cfmt?status.svg"/></a>
+  <a href="https://travis-ci.org/mingrammer/pyreportcard"><img src="https://travis-ci.org/mingrammer/pyreportcard.svg?branch=master"/></a>
+</p>
 
 <p align="center"> Contextual fmt </p>
 
