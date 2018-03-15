@@ -7,6 +7,7 @@
   <a href="https://goreportcard.com/report/github.com/mingrammer/cfmt"><img src="https://goreportcard.com/badge/github.com/mingrammer/cfmt"/></a>
   <a href="https://godoc.org/github.com/mingrammer/cfmt"><img src="https://godoc.org/github.com/mingrammer/cfmt?status.svg"/></a>
   <a href="https://travis-ci.org/mingrammer/cfmt"><img src="https://travis-ci.org/mingrammer/cfmt.svg?branch=master"/></a>
+  <a href="https://codecov.io/gh/mingrammer/cfmt"><img src="https://codecov.io/gh/mingrammer/cfmt/branch/master/graph/badge.svg"/></a>
 </p>
 
 <p align="center"> Contextual fmt </p>
