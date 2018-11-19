@@ -25,7 +25,11 @@ go get github.com/mingrammer/cfmt
 ## Usage
 
 ```go
+package main
+
 import (
+	"log"
+
 	"github.com/mingrammer/cfmt"
 )
 
