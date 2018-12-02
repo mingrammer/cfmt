@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io"
 	"testing"
-
-	"github.com/fatih/color"
 )
 
 type (
@@ -21,20 +19,25 @@ type (
 	SprintlnFunc func(...interface{}) string
 )
 
+const (
+	Green  = 32
+	Cyan   = 36
+	Yellow = 33
+	Red    = 31
+)
+
 func TestContextualFprintf(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
 
 	testCases := []struct {
 		cfmt FprintfFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Fsuccessf, code: color.FgGreen, text: "success"},
-		{cfmt: Finfof, code: color.FgCyan, text: "info"},
-		{cfmt: Fwarningf, code: color.FgYellow, text: "warning"},
-		{cfmt: Ferrorf, code: color.FgRed, text: "error"},
+		{cfmt: Fsuccessf, code: Green, text: "success"},
+		{cfmt: Finfof, code: Cyan, text: "info"},
+		{cfmt: Fwarningf, code: Yellow, text: "warning"},
+		{cfmt: Ferrorf, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -51,18 +54,17 @@ func TestContextualFprintf(t *testing.T) {
 
 func TestContextualPrintf(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
+	output = rb
 
 	testCases := []struct {
 		cfmt PrintfFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Successf, code: color.FgGreen, text: "success"},
-		{cfmt: Infof, code: color.FgCyan, text: "info"},
-		{cfmt: Warningf, code: color.FgYellow, text: "warning"},
-		{cfmt: Errorf, code: color.FgRed, text: "error"},
+		{cfmt: Successf, code: Green, text: "success"},
+		{cfmt: Infof, code: Cyan, text: "info"},
+		{cfmt: Warningf, code: Yellow, text: "warning"},
+		{cfmt: Errorf, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -80,13 +82,13 @@ func TestContextualPrintf(t *testing.T) {
 func TestContextualSprintf(t *testing.T) {
 	testCases := []struct {
 		cfmt SprintfFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Ssuccessf, code: color.FgGreen, text: "success"},
-		{cfmt: Sinfof, code: color.FgCyan, text: "info"},
-		{cfmt: Swarningf, code: color.FgYellow, text: "warning"},
-		{cfmt: Serrorf, code: color.FgRed, text: "error"},
+		{cfmt: Ssuccessf, code: Green, text: "success"},
+		{cfmt: Sinfof, code: Cyan, text: "info"},
+		{cfmt: Swarningf, code: Yellow, text: "warning"},
+		{cfmt: Serrorf, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -102,18 +104,17 @@ func TestContextualSprintf(t *testing.T) {
 
 func TestContextualFprint(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
+	output = rb
 
 	testCases := []struct {
 		cfmt FprintFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Fsuccess, code: color.FgGreen, text: "success"},
-		{cfmt: Finfo, code: color.FgCyan, text: "info"},
-		{cfmt: Fwarning, code: color.FgYellow, text: "warning"},
-		{cfmt: Ferror, code: color.FgRed, text: "error"},
+		{cfmt: Fsuccess, code: Green, text: "success"},
+		{cfmt: Finfo, code: Cyan, text: "info"},
+		{cfmt: Fwarning, code: Yellow, text: "warning"},
+		{cfmt: Ferror, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -130,18 +131,17 @@ func TestContextualFprint(t *testing.T) {
 
 func TestContextualPrint(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
+	output = rb
 
 	testCases := []struct {
 		cfmt PrintFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Success, code: color.FgGreen, text: "success"},
-		{cfmt: Info, code: color.FgCyan, text: "info"},
-		{cfmt: Warning, code: color.FgYellow, text: "warning"},
-		{cfmt: Error, code: color.FgRed, text: "error"},
+		{cfmt: Success, code: Green, text: "success"},
+		{cfmt: Info, code: Cyan, text: "info"},
+		{cfmt: Warning, code: Yellow, text: "warning"},
+		{cfmt: Error, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -159,13 +159,13 @@ func TestContextualPrint(t *testing.T) {
 func TestContextualSprint(t *testing.T) {
 	testCases := []struct {
 		cfmt SprintFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Ssuccess, code: color.FgGreen, text: "success"},
-		{cfmt: Sinfo, code: color.FgCyan, text: "info"},
-		{cfmt: Swarning, code: color.FgYellow, text: "warning"},
-		{cfmt: Serror, code: color.FgRed, text: "error"},
+		{cfmt: Ssuccess, code: Green, text: "success"},
+		{cfmt: Sinfo, code: Cyan, text: "info"},
+		{cfmt: Swarning, code: Yellow, text: "warning"},
+		{cfmt: Serror, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -181,18 +181,17 @@ func TestContextualSprint(t *testing.T) {
 
 func TestContextualFprintln(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
+	output = rb
 
 	testCases := []struct {
 		cfmt FprintlnFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Fsuccessln, code: color.FgGreen, text: "success"},
-		{cfmt: Finfoln, code: color.FgCyan, text: "info"},
-		{cfmt: Fwarningln, code: color.FgYellow, text: "warning"},
-		{cfmt: Ferrorln, code: color.FgRed, text: "error"},
+		{cfmt: Fsuccessln, code: Green, text: "success"},
+		{cfmt: Finfoln, code: Cyan, text: "info"},
+		{cfmt: Fwarningln, code: Yellow, text: "warning"},
+		{cfmt: Ferrorln, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -209,18 +208,17 @@ func TestContextualFprintln(t *testing.T) {
 
 func TestContextualPrintln(t *testing.T) {
 	rb := new(bytes.Buffer)
-	color.Output = rb
-	color.NoColor = false
+	output = rb
 
 	testCases := []struct {
 		cfmt PrintlnFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Successln, code: color.FgGreen, text: "success"},
-		{cfmt: Infoln, code: color.FgCyan, text: "info"},
-		{cfmt: Warningln, code: color.FgYellow, text: "warning"},
-		{cfmt: Errorln, code: color.FgRed, text: "error"},
+		{cfmt: Successln, code: Green, text: "success"},
+		{cfmt: Infoln, code: Cyan, text: "info"},
+		{cfmt: Warningln, code: Yellow, text: "warning"},
+		{cfmt: Errorln, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
@@ -238,13 +236,13 @@ func TestContextualPrintln(t *testing.T) {
 func TestContextualSprintln(t *testing.T) {
 	testCases := []struct {
 		cfmt SprintlnFunc
-		code color.Attribute
+		code int
 		text string
 	}{
-		{cfmt: Ssuccessln, code: color.FgGreen, text: "success"},
-		{cfmt: Sinfoln, code: color.FgCyan, text: "info"},
-		{cfmt: Swarningln, code: color.FgYellow, text: "warning"},
-		{cfmt: Serrorln, code: color.FgRed, text: "error"},
+		{cfmt: Ssuccessln, code: Green, text: "success"},
+		{cfmt: Sinfoln, code: Cyan, text: "info"},
+		{cfmt: Swarningln, code: Yellow, text: "warning"},
+		{cfmt: Serrorln, code: Red, text: "error"},
 	}
 
 	for _, c := range testCases {
