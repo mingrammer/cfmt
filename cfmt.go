@@ -3,9 +3,9 @@ package cfmt
 import (
 	"fmt"
 	"io"
-	"os"
 
 	"github.com/logrusorgru/aurora"
+	"github.com/mattn/go-colorable"
 )
 
 var (
@@ -16,7 +16,7 @@ var (
 
 // newStdout return new instance of Writer which handle escape sequence for stdout.
 func newStdout() io.Writer {
-	return os.Stdout
+	return colorable.NewColorableStdout()
 }
 
 // Fsuccessf writes green colored text in manner of fmt.Fprintf
