@@ -9,15 +9,8 @@ import (
 )
 
 var (
-	// output defines the standard output of the print functions.
-	// By default, os.Stdout is used.
-	output = newStdout()
+	output = colorable.NewColorableStdout()
 )
-
-// newStdout return new instance of Writer which handle escape sequence for stdout.
-func newStdout() io.Writer {
-	return colorable.NewColorableStdout()
-}
 
 // Fsuccessf writes green colored text in manner of fmt.Fprintf
 func Fsuccessf(w io.Writer, format string, a ...interface{}) (n int, err error) {
