@@ -43,7 +43,7 @@ func main() {
 
 ![cfmt output](images/output.png)
 
-## Contextual Functions
+## Contextual functions
 
 > Note: cfmt.Errorf function does not do same things to fmt.Errorf, but to fmt.Printf with red colored text.
 
