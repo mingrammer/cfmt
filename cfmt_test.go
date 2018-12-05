@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"testing"
+
+	"github.com/logrusorgru/aurora"
 )
 
 type (
@@ -19,32 +21,25 @@ type (
 	SprintlnFunc func(...interface{}) string
 )
 
-const (
-	Green  = 32
-	Cyan   = 36
-	Yellow = 33
-	Red    = 31
-)
-
 func TestContextualFprintf(t *testing.T) {
 	rb := new(bytes.Buffer)
 
 	testCases := []struct {
-		cfmt FprintfFunc
-		code int
-		text string
+		cfmt  FprintfFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Fsuccessf, code: Green, text: "success"},
-		{cfmt: Finfof, code: Cyan, text: "info"},
-		{cfmt: Fwarningf, code: Yellow, text: "warning"},
-		{cfmt: Ferrorf, code: Red, text: "error"},
+		{cfmt: Fsuccessf, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Finfof, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Fwarningf, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Ferrorf, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt(rb, "This is %s", c.text)
 		line, _ := rb.ReadString('\n')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dmThis is %s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%smThis is %s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -57,21 +52,21 @@ func TestContextualPrintf(t *testing.T) {
 	output = rb
 
 	testCases := []struct {
-		cfmt PrintfFunc
-		code int
-		text string
+		cfmt  PrintfFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Successf, code: Green, text: "success"},
-		{cfmt: Infof, code: Cyan, text: "info"},
-		{cfmt: Warningf, code: Yellow, text: "warning"},
-		{cfmt: Errorf, code: Red, text: "error"},
+		{cfmt: Successf, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Infof, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Warningf, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Errorf, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt("This is %s", c.text)
 		line, _ := rb.ReadString('\n')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dmThis is %s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%smThis is %s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -81,20 +76,20 @@ func TestContextualPrintf(t *testing.T) {
 
 func TestContextualSprintf(t *testing.T) {
 	testCases := []struct {
-		cfmt SprintfFunc
-		code int
-		text string
+		cfmt  SprintfFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Ssuccessf, code: Green, text: "success"},
-		{cfmt: Sinfof, code: Cyan, text: "info"},
-		{cfmt: Swarningf, code: Yellow, text: "warning"},
-		{cfmt: Serrorf, code: Red, text: "error"},
+		{cfmt: Ssuccessf, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Sinfof, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Swarningf, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Serrorf, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		line := c.cfmt("This is %s", c.text)
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dmThis is %s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%smThis is %s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -107,21 +102,21 @@ func TestContextualFprint(t *testing.T) {
 	output = rb
 
 	testCases := []struct {
-		cfmt FprintFunc
-		code int
-		text string
+		cfmt  FprintFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Fsuccess, code: Green, text: "success"},
-		{cfmt: Finfo, code: Cyan, text: "info"},
-		{cfmt: Fwarning, code: Yellow, text: "warning"},
-		{cfmt: Ferror, code: Red, text: "error"},
+		{cfmt: Fsuccess, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Finfo, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Fwarning, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Ferror, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt(rb, c.text)
 		line, _ := rb.ReadString('\n')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -134,21 +129,21 @@ func TestContextualPrint(t *testing.T) {
 	output = rb
 
 	testCases := []struct {
-		cfmt PrintFunc
-		code int
-		text string
+		cfmt  PrintFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Success, code: Green, text: "success"},
-		{cfmt: Info, code: Cyan, text: "info"},
-		{cfmt: Warning, code: Yellow, text: "warning"},
-		{cfmt: Error, code: Red, text: "error"},
+		{cfmt: Success, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Info, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Warning, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Error, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt(c.text)
 		line, _ := rb.ReadString('\n')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -158,20 +153,20 @@ func TestContextualPrint(t *testing.T) {
 
 func TestContextualSprint(t *testing.T) {
 	testCases := []struct {
-		cfmt SprintFunc
-		code int
-		text string
+		cfmt  SprintFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Ssuccess, code: Green, text: "success"},
-		{cfmt: Sinfo, code: Cyan, text: "info"},
-		{cfmt: Swarning, code: Yellow, text: "warning"},
-		{cfmt: Serror, code: Red, text: "error"},
+		{cfmt: Ssuccess, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Sinfo, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Swarning, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Serror, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		line := c.cfmt(c.text)
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -184,21 +179,21 @@ func TestContextualFprintln(t *testing.T) {
 	output = rb
 
 	testCases := []struct {
-		cfmt FprintlnFunc
-		code int
-		text string
+		cfmt  FprintlnFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Fsuccessln, code: Green, text: "success"},
-		{cfmt: Finfoln, code: Cyan, text: "info"},
-		{cfmt: Fwarningln, code: Yellow, text: "warning"},
-		{cfmt: Ferrorln, code: Red, text: "error"},
+		{cfmt: Fsuccessln, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Finfoln, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Fwarningln, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Ferrorln, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt(rb, c.text)
 		line, _ := rb.ReadString(' ')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\n\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -211,21 +206,21 @@ func TestContextualPrintln(t *testing.T) {
 	output = rb
 
 	testCases := []struct {
-		cfmt PrintlnFunc
-		code int
-		text string
+		cfmt  PrintlnFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Successln, code: Green, text: "success"},
-		{cfmt: Infoln, code: Cyan, text: "info"},
-		{cfmt: Warningln, code: Yellow, text: "warning"},
-		{cfmt: Errorln, code: Red, text: "error"},
+		{cfmt: Successln, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Infoln, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Warningln, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Errorln, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		c.cfmt(c.text)
 		line, _ := rb.ReadString(' ')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\n\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -235,20 +230,20 @@ func TestContextualPrintln(t *testing.T) {
 
 func TestContextualSprintln(t *testing.T) {
 	testCases := []struct {
-		cfmt SprintlnFunc
-		code int
-		text string
+		cfmt  SprintlnFunc
+		color aurora.Color
+		text  string
 	}{
-		{cfmt: Ssuccessln, code: Green, text: "success"},
-		{cfmt: Sinfoln, code: Cyan, text: "info"},
-		{cfmt: Swarningln, code: Yellow, text: "warning"},
-		{cfmt: Serrorln, code: Red, text: "error"},
+		{cfmt: Ssuccessln, color: aurora.Color(aurora.GreenFg), text: "success"},
+		{cfmt: Sinfoln, color: aurora.Color(aurora.CyanFg), text: "info"},
+		{cfmt: Swarningln, color: aurora.Color(aurora.BrownFg), text: "warning"},
+		{cfmt: Serrorln, color: aurora.Color(aurora.RedFg), text: "error"},
 	}
 
 	for _, c := range testCases {
 		line := c.cfmt(c.text)
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%dm%s\n\x1b[0m", c.code, c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
