@@ -193,7 +193,7 @@ func TestContextualFprintln(t *testing.T) {
 		c.cfmt(rb, c.text)
 		line, _ := rb.ReadString(' ')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m\n", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -220,7 +220,7 @@ func TestContextualPrintln(t *testing.T) {
 		c.cfmt(c.text)
 		line, _ := rb.ReadString(' ')
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m\n", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)
@@ -243,7 +243,7 @@ func TestContextualSprintln(t *testing.T) {
 	for _, c := range testCases {
 		line := c.cfmt(c.text)
 		scannedLine := fmt.Sprintf("%q", line)
-		colored := fmt.Sprintf("\x1b[%sm%s\n\x1b[0m", c.color.Nos(), c.text)
+		colored := fmt.Sprintf("\x1b[%sm%s\x1b[0m\n", c.color.Nos(), c.text)
 		escapedForm := fmt.Sprintf("%q", colored)
 		if scannedLine != escapedForm {
 			t.Errorf("Expecting %s, got '%s'\n", escapedForm, scannedLine)

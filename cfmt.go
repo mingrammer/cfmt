@@ -133,7 +133,7 @@ func Swarning(a ...interface{}) string {
 
 // Ferror prints red colored text in manner of fmt.Fprint
 func Ferror(w io.Writer, a ...interface{}) (n int, err error) {
-	n, err = fmt.Fprint(w, fmt.Sprint(aurora.Red(fmt.Sprint(a...))))
+	n, err = fmt.Fprint(w, aurora.Red(fmt.Sprint(a...)))
 	return
 }
 
@@ -150,7 +150,7 @@ func Serror(a ...interface{}) string {
 
 // Fsuccessln prints green colored text in manner of fmt.Fprintln
 func Fsuccessln(w io.Writer, a ...interface{}) (n int, err error) {
-	n, err = fmt.Fprint(w, fmt.Sprint(aurora.Green(fmt.Sprintln(a...))))
+	n, err = fmt.Fprintln(w, aurora.Green(fmt.Sprint(a...)))
 	return
 }
 
@@ -162,12 +162,12 @@ func Successln(a ...interface{}) (n int, err error) {
 
 // Ssuccessln returns green colored string in manner of fmt.Sprintln
 func Ssuccessln(a ...interface{}) string {
-	return fmt.Sprint(aurora.Green(fmt.Sprintln(a...)))
+	return fmt.Sprintln(aurora.Green(fmt.Sprint(a...)))
 }
 
 // Finfoln prints cyan colored text in manner of fmt.Fprintln
 func Finfoln(w io.Writer, a ...interface{}) (n int, err error) {
-	n, err = fmt.Fprint(w, aurora.Cyan(fmt.Sprintln(a...)))
+	n, err = fmt.Fprintln(w, aurora.Cyan(fmt.Sprint(a...)))
 	return
 }
 
@@ -179,12 +179,12 @@ func Infoln(a ...interface{}) (n int, err error) {
 
 // Sinfoln returns cyan colored string in manner of fmt.Sprintln
 func Sinfoln(a ...interface{}) string {
-	return fmt.Sprint(aurora.Cyan(fmt.Sprintln(a...)))
+	return fmt.Sprintln(aurora.Cyan(fmt.Sprint(a...)))
 }
 
 // Fwarningln prints yellow colored text in manner of fmt.Fprintln
 func Fwarningln(w io.Writer, a ...interface{}) (n int, err error) {
-	n, err = fmt.Fprint(w, fmt.Sprint(aurora.Brown(fmt.Sprintln(a...))))
+	n, err = fmt.Fprintln(w, aurora.Brown(fmt.Sprint(a...)))
 	return
 }
 
@@ -196,12 +196,12 @@ func Warningln(a ...interface{}) (n int, err error) {
 
 // Swarningln returns yellow colored string in manner of fmt.Sprintln
 func Swarningln(a ...interface{}) string {
-	return fmt.Sprint(aurora.Brown(fmt.Sprintln(a...)))
+	return fmt.Sprintln(aurora.Brown(fmt.Sprint(a...)))
 }
 
 // Ferrorln prints red colored text in manner of fmt.Fprintln
 func Ferrorln(w io.Writer, a ...interface{}) (n int, err error) {
-	n, err = fmt.Fprint(w, aurora.Red(fmt.Sprintln(a...)))
+	n, err = fmt.Fprintln(w, aurora.Red(fmt.Sprint(a...)))
 	return
 }
 
@@ -213,5 +213,5 @@ func Errorln(a ...interface{}) (n int, err error) {
 
 // Serrorln returns red colored string in manner of fmt.Sprintln
 func Serrorln(a ...interface{}) string {
-	return fmt.Sprint(aurora.Red(fmt.Sprintln(a...)))
+	return fmt.Sprintln(aurora.Red(fmt.Sprint(a...)))
 }
