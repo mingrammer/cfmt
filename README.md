@@ -28,16 +28,16 @@ go get github.com/mingrammer/cfmt
 package main
 
 import (
-	"log"
+    "log"
 
-	"github.com/mingrammer/cfmt"
+    "github.com/mingrammer/cfmt"
 )
 
 func main() {
-	cfmt.Success("User was created successfully")
-	cfmt.Infoln("Here are some candidates")
-	cfmt.Warningf("%s is not valid integer value\n", "123a")
-	log.Fatal(cfmt.Serrorf("Only numeric is allowed, got %s", "123.456a"))
+    cfmt.Success("User was created successfully")
+    cfmt.Infoln("Here are some candidates")
+    cfmt.Warningf("%s is not valid integer value\n", "123a")
+    log.Fatal(cfmt.Serrorf("Only numeric is allowed, got %s", "123.456a"))
 }
 ```
 
